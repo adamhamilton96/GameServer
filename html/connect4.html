@@ -1,0 +1,114 @@
+<head>
+    <title>Connect4</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+</head>
+<body>
+    <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <br></br>
+    <script> 
+    var socket = new WebSocket("ws://192.168.1.230:1255/connect4echo");
+    var boardHeight;
+    var boardLength;
+    var res;
+    var board;
+    var players;
+    var waiting;
+    var turnTrue;
+    var winner;
+
+    socket.onopen = function() {
+        socket.send("SOCKET_OPEN");
+    };
+
+    window.onbeforeunload = function() {
+        socket.send("SOCKET_CLOSED")
+    }
+
+    socket.onmessage = function(e) {
+        var msg = e.data.split(" ");
+        if(msg[0] == "WINNER") {
+            if(msg[1] == "YOU") winner = "You";
+            else if(msg[1] == "DRAW") winner = "Draw";
+            else winner = "Other";
+        } else {
+            createBoard();
+            var count = 0;
+            for(j = 0; j < boardHeight; j++) {
+                for(i = 0; i < boardLength; i++) {
+                    board[j][i] = parseInt(msg[count]);
+                    count++;
+                }
+            }
+            if(msg[count] == 1) turnTrue = true;
+            else turnTrue = false;
+        } 
+    };
+
+    function setup() {
+        canvas = createCanvas(700, 700);
+        boardHeight = 6;
+        boardLength = 7;
+        res = 87;
+        players = [];
+        waiting = true;
+        turnTrue = false;
+        winner = "None";
+        createBoard();
+    }
+    
+    function createBoard() {
+        board = new Array();
+        for (j = 0; j < boardHeight; j++) {
+            board[j] = new Array();
+            for (i = 0; i < boardLength; i++) {
+                board[j][i] = 0;
+            }
+        }
+    }
+
+    function draw() {
+        background(255);
+        fill(10, 10, 150);
+        rect(0, 0, 700, 600);
+        drawBoard();
+        textSize(32);
+        fill(0);
+        text('Your turn: ' + turnTrue.toString(), 20, 650);
+        text('Game winner: ' + winner, 370, 650);
+        if(winner != "None") {
+            noLoop();
+            setTimeout(reset, 4000);
+        }
+    }
+
+    function reset() {
+        location.reload();
+    }
+
+    function drawBoard() {
+        // Draw Board
+        for(j = 0; j < boardHeight; j++) {
+            for(i = 0; i < boardLength; i++) {
+                if(board[j][i] == 0) fill(255);
+                else if(board[j][i] == 1) fill(255, 0, 0);
+                else if(board[j][i] == 2) fill(255, 255, 0);
+                ellipse((i + 1) * res, (j + 1) * res, res, res);
+            }
+        }
+    }
+
+    function mouseReleased() {
+        if(turnTrue == true) {
+            for(j = 0; j < boardHeight; j++) {
+                for(i = 0; i < boardLength; i++) {
+                    if((mouseX > (i + 1) * res - res / 2) && (mouseX < (i + 1) * res + res / 2)) {
+                        socket.send(i.toString());
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</body>
