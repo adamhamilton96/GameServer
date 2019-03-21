@@ -24,9 +24,16 @@ func main() {
 	// Home
 	http.HandleFunc("/", rootHandler)
 
+	// Multiplayer
 	// Connect4
 	http.HandleFunc("/connect4/", connect4Handler)
 	http.HandleFunc("/connect4echo", connect4EchoHandler)
+
+	// Singleplayer
+
+
+	// Cellular Automaton
+	http.HandleFunc("/gameoflife", gameOfLifeHandler)
 
 	log.Fatal(http.ListenAndServe("192.168.1.230:1255", nil))
 }

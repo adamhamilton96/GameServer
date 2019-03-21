@@ -1,0 +1,94 @@
+<head>
+    <title>Game Of Life</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+</head>
+<body>
+    <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <br></br>
+    <script> 
+    var grid;
+    var next;
+    var squareSize;
+    var gridLength;
+    var gridHeight;
+    var speedSlider;
+        
+    function setup() {
+        speedSlider = createSlider(1, 10, 1);
+        speedSlider.position(5, 1100);
+    
+        next = new Array();
+        grid = new Array();
+        squareSize = 50;
+        gridLength = 20;
+        gridHeight = 20;
+
+        createCanvas(1000, 1000);
+        createGrid();
+    }
+
+    function draw() {
+        stroke(255);
+        generate();
+        for (i = 0; i < gridLength; i++) {
+            for (j = 0; j < gridHeight; j++) {
+                if (grid[j][i] === 0) {
+                    fill(255);
+                } else if (grid[j][i] === 1) {
+                    fill(0);
+                }
+                rect(i * squareSize, j * squareSize, squareSize, squareSize);
+            }
+        }
+    }
+
+    function createGrid() {
+        for (i = 0; i < gridLength; i++) {
+            grid[i] = new Array();
+            for (j = 0; j < gridHeight; j++) {
+                if (random() > 0.75) grid[i][j] = 1;
+                else grid[i][j] = 0;
+            }
+        }
+        for (i = 0; i < gridLength; i++) {
+            next[i] = new Array();
+            for (j = 0; j < gridHeight; j++) {
+                next[i][j] = 0;
+            }
+        }
+    }
+
+    function generate(){
+        var neighbours;
+        for (i = 0; i < speedSlider.value(); i++) {
+            for (i = 1; i < gridLength - 1; i++) {
+                for (j = 1; j < gridHeight - 1; j++) {
+                    neighbours = 0;
+                    if (grid[j - 1][i + 1] === 1) neighbours++;
+                    if (grid[j][i + 1] === 1) neighbours++;
+                    if (grid[j + 1][i + 1] === 1) neighbours++;
+                    if (grid[j - 1][i] === 1) neighbours++;
+                    if (grid[j + 1][i] === 1) neighbours++;
+                    if (grid[j - 1][i - 1] === 1) neighbours++;
+                    if (grid[j][i - 1] === 1) neighbours++;
+                    if (grid[j + 1][i - 1] === 1) neighbours++;
+
+                    if (grid[j][i] === 0) {
+                        if (neighbours === 3) next[j][i] = 1;
+                        else next[j][i] = 0;
+                    } else if (grid[j][i] === 1) {
+                        if (neighbours < 2 || neighbours > 3) next[j][i] = 0;
+                        else next[j][i] = 1;
+                    }
+                }
+            }
+            grid = next;
+        }
+    }
+
+    function mouseClicked(){
+        setup();
+    }
+    </script>
+</body>
