@@ -34,10 +34,10 @@
 
         for (i = 0; i < gridLength; i++) {
             for (j = 0; j < gridHeight; j++) {
-                if (grid[i][j] === 0) {
-                    fill(255);
-                } else if(grid[i][j] === grid[x][y]) {
+                if(grid[i][j] === grid[x][y]) {
                     fill(255, 0, 0);
+                } else if (grid[i][j] === 0) {
+                    fill(255);
                 } else
                     fill(0);
                 rect(i * squareSize, j * squareSize, squareSize, squareSize);
