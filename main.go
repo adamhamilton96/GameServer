@@ -33,7 +33,7 @@ func main() {
 
 	// Cellular 
 	// GameOfLife
-	http.HandleFunc("/gameoflife", gameOfLifeHandler)
+	http.HandleFunc("/gameoflife", gameoflife)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
