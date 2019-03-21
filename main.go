@@ -31,7 +31,6 @@ func main() {
 
 	// Singleplayer
 
-
 	// Cellular Automaton
 	http.HandleFunc("/gameoflife", gameOfLifeHandler)
 
