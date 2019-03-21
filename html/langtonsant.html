@@ -34,7 +34,7 @@
 
         for (i = 0; i < gridLength; i++) {
             for (j = 0; j < gridHeight; j++) {
-                if(grid[i][j] === grid[x][y]) {
+                if(i === x && j === y) {
                     fill(255, 0, 0);
                 } else if (grid[i][j] === 0) {
                     fill(255);
