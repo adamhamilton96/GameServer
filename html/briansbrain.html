@@ -1,0 +1,111 @@
+<head>
+    <title>Game Of Life</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+</head>
+<body>
+    <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <br></br>
+    <script> 
+    var gridNo;
+    var squareSize;
+    var grid;
+    var next;
+
+    function setup() {
+        createCanvas(800, 800);
+        gridNo = 200;
+
+        next = new Array();
+        grid = new Array();
+        createGrid();
+
+        squareSize = width / gridNo;
+        randomise();
+    }
+
+    function createGrid() {
+        for (i = 0; i < gridNo; i++) {
+            grid[i] = new Array();
+            for (j = 0; j < gridNo; j++) {
+                if (random() > 0.7) grid[i][j] = 1;
+                else grid[i][j] = 0;
+            }
+        }
+        for (i = 0; i < gridNo; i++) {
+            next[i] = new Array();
+            for (j = 0; j < gridNo; j++) {
+                next[i][j] = 0;
+            }
+        }
+    }
+
+    function draw() {
+        noStroke();
+        drawGrid();
+        calculateGrid();
+        fill(255, 0, 0);
+        text(frameRate, 5, 20);
+    }
+
+    function randomise() {
+        for(var i = 0; i < gridNo; i++) {
+            for(var j = 0; j < gridNo; j++) {
+                var r = random(0, 1);
+                if(r > 0.6) 
+                grid[i][j] = 1;
+            }
+        }
+    }
+
+    function drawGrid() {
+        for(var i = 0; i < gridNo; i++) {
+            for(var j = 0; j < gridNo; j++) {
+                if(grid[i][j] == 0) {
+                    fill(255);  
+                } else if(grid[i][j] == 1){
+                    fill(0);
+                } else {
+                    fill(0, 0, 180);
+                }
+                rect(squareSize * i, squareSize * j, squareSize, squareSize);  
+            }
+        }
+    }
+
+    // Cell States: 0 = DEAD, 1 = LIVE, 2 = DYING
+    function calculateGrid() { 
+        var leastOne = false;
+        for(var i = 1; i < gridNo - 1; i++) {
+            for(var j = 1; j < gridNo - 1; j++) {
+                var neighbours = 0;
+                if(grid[i - 1][j + 1] == 1) neighbours++;
+                if(grid[i][j + 1] == 1) neighbours++;
+                if(grid[i + 1][j + 1] == 1) neighbours++;
+                if(grid[i - 1][j] == 1) neighbours++;
+                if(grid[i + 1][j] == 1) neighbours++;
+                if(grid[i - 1][j - 1] == 1) neighbours++;
+                if(grid[i][j - 1] == 1) neighbours++;
+                if(grid[i + 1][j - 1] == 1) neighbours++;
+                
+                if(grid[i][j] == 0 && neighbours == 2) {
+                    next[i][j] = 1;
+                    leastOne = true;
+                }
+                else if(grid[i][j] == 2) next[i][j] = 0;
+                else if(grid[i][j] == 1) next[i][j] = 2;
+            }
+        }
+        grid = next;
+        next = new Array();
+        for (i = 0; i < gridNo; i++) {
+            next[i] = new Array();
+            for (j = 0; j < gridNo; j++) {
+                next[i][j] = 0;
+            }
+        }
+        
+        if(!leastOne) randomise();
+    }
+    </script>
+</body>

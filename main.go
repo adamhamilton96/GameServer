@@ -31,11 +31,11 @@ func main() {
 
 	// Singleplayer
 
-	// Cellular
-	// GameOfLife
+	// Cellular Automaton
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
-	// LangtonsAnt
 	http.HandleFunc("/langtonsant/", langtonsAntHandler)
+	http.HandleFunc("/briansbrain/", briansBrainHandler)
+
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
