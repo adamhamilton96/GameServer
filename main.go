@@ -34,6 +34,8 @@ func main() {
 	// Cellular
 	// GameOfLife
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
+	// LangtonsAnt
+	http.HandleFunc("/langtonsant/", langtonsAntHandler)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
