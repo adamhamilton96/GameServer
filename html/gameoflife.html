@@ -13,18 +13,18 @@
     var gridLength;
     var gridHeight;
     var speedSlider;
-        
-    function setup() {
-        speedSlider = createSlider(1, 10, 1);
-        speedSlider.position(5, 1100);
     
+    speedSlider = createSlider(1, 10, 1);
+    speedSlider.position(5, 900);
+
+    function setup() {    
         next = new Array();
         grid = new Array();
-        squareSize = 50;
+        squareSize = 40;
         gridLength = 20;
         gridHeight = 20;
 
-        createCanvas(1000, 1000);
+        createCanvas(800, 800);
         createGrid();
     }
 
