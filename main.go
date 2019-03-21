@@ -20,7 +20,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	fmt.Println("Game Server Online")
-	fmt.Print(boardString())
+
 	// Home
 	http.HandleFunc("/", rootHandler)
 
@@ -31,7 +31,8 @@ func main() {
 
 	// Singleplayer
 
-	// Cellular Automaton
+	// Cellular 
+	// GameOfLife
 	http.HandleFunc("/gameoflife", gameOfLifeHandler)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
