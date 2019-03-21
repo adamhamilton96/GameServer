@@ -31,9 +31,9 @@ func main() {
 
 	// Singleplayer
 
-	// Cellular 
+	// Cellular
 	// GameOfLife
-	http.HandleFunc("/gameoflife", gameoflife)
+	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
