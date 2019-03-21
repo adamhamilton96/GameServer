@@ -15,19 +15,22 @@
     var speedSlider;
         
     function setup() {  
-    speedSlider = createSlider(1, 10, 1);
-    speedSlider.position(5, 1100);  
+        speedSlider = createSlider(1, 10, 1);
+        speedSlider.position(5, 850);  
 
         squareSize = 10;
         gridLength = 80;
         gridHeight = 80;
 
+        next = new Array();
+        grid = new Array();
+        createGrid();
         createCanvas(800, 800);
     }
 
     function reset() {
-    next = new Array();
-    grid = new Array();
+        next = new Array();
+        grid = new Array();
         createGrid();
     }
 
