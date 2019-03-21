@@ -14,17 +14,21 @@
     var gridHeight;
     var speedSlider;
     
-    speedSlider = createSlider(1, 10, 1);
-    speedSlider.position(5, 900);
-
     function setup() {    
-        next = new Array();
-        grid = new Array();
+        speedSlider = createSlider(1, 10, 1);
+        speedSlider.position(5, 900);
+
         squareSize = 40;
         gridLength = 20;
         gridHeight = 20;
 
         createCanvas(800, 800);
+        reset();
+    }
+
+    function reset() {
+        next = new Array();
+        grid = new Array();
         createGrid();
     }
 
@@ -88,7 +92,7 @@
     }
 
     function mouseClicked(){
-        setup();
+        reset();
     }
     </script>
 </body>
