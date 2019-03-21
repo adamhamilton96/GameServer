@@ -34,5 +34,5 @@ func main() {
 	// Cellular Automaton
 	http.HandleFunc("/gameoflife", gameOfLifeHandler)
 
-	log.Fatal(http.ListenAndServe("192.168.1.230:1255", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
