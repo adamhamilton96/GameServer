@@ -19,7 +19,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("Game Server Online")
+	fmt.Println("Haxxion.xyz Online :)")
 
 	// Home
 	http.HandleFunc("/", rootHandler)
@@ -35,7 +35,6 @@ func main() {
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
 	http.HandleFunc("/langtonsant/", langtonsAntHandler)
 	http.HandleFunc("/briansbrain/", briansBrainHandler)
-
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
