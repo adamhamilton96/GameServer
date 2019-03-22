@@ -1,0 +1,77 @@
+<head>
+    <title>Game Of Life</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+</head>
+<body>
+    <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <br></br>
+    <script> 
+    var grid;
+    var gridSize;
+    var squareSize;
+    var speedSlider;
+        
+    function setup() {  
+        speedSlider = createSlider(1, 10, 1);
+        speedSlider.position(5, 900);  
+        createCanvas(900, 900);
+        reset();
+    }
+
+    function reset() {
+        gridSize = 90;
+        squareSize = width / gridSize;
+        next = new Array();
+        grid = new Array();
+        createGrid();
+    }
+
+    function draw() {
+        noStroke();
+        drawGrid();
+        for(i = 0; i < speedSlider.value; i++){
+            calculateGrid();
+        }
+    }
+
+    function createGrid() {
+        for (i = 0; i < gridSize; i++) {
+            grid[i] = new Array();
+            for (j = 0; j < gridSize; j++) {
+                grid[i][j] = 0;
+            }
+        }
+        grid[gridSize/2][gridSize/2] = 17000000;
+    }
+
+    function drawGrid() {
+        for (var i = 0; i < gridSize; i++) {
+            for (var j = 0; j < gridSize; j++) {
+                if(grid[i][j] == 0) fill(255);
+                else if(grid[i][j] > 2) fill(150, 0, 150);
+                else fill(255, 0, 0);
+                rect(i * squareSize, j * squareSize, squareSize, squareSize);
+            }
+        }
+    }
+
+    function calculateGrid() {
+        for (var i = 0; i < gridSize - 1; i++) {
+            for (var j = 0; j < gridSize - 1; j++) {
+                if(grid[i][j] >= 4) {
+                    grid[i][j] -= 4;
+                    grid[i+1][j] += 1;
+                    grid[i-1][j] += 1;
+                    grid[i][j+1] += 1;
+                    grid[i][j-1] += 1;
+                } 
+            }
+        }
+    }
+   
+    function mouseClicked(){
+        reset();
+    }
+    </script>
+</body>

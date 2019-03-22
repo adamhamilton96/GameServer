@@ -36,6 +36,7 @@ func main() {
 	http.HandleFunc("/langtonsant/", langtonsAntHandler)
 	http.HandleFunc("/briansbrain/", briansBrainHandler)
 	http.HandleFunc("/wireworld/", wireWorldHandler)
+	http.HandleFUnc("/sandpiles/", sandPilesHandler)
 
 	log.Fatal(http.ListenAndServe(":80", nil))
 }

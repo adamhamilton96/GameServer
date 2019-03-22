@@ -17,3 +17,7 @@ func briansBrainHandler(w http.ResponseWriter, r *http.Request) {
 func wireWorldHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/wireworld.html")
 }
+
+func sandPilesHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/sandpiles.html")
+}
