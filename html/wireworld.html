@@ -21,9 +21,10 @@
     var next;
     var choice = 1;
     var cnv;
+    var fr = 15;
 
     function setup() {
-        //frameRate(15);
+        frameRate(fr);
         cnv = createCanvas(600, 600);
         !cnv.mousePressed(calculateGrid);
         gridSize = 30;
@@ -51,6 +52,7 @@
     function draw() {
         drawGrid();
         calculateGrid();
+        frameRate(fr);
     }
 
     function drawGrid() {
