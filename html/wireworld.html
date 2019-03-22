@@ -20,10 +20,12 @@
     var grid;
     var next;
     var choice = 1;
+    var cnv;
 
     function setup() {
-        frameRate(15);
-        createCanvas(600, 600);
+        //frameRate(15);
+        cnv = createCanvas(600, 600);
+        !cnv.mousePressed(calculateGrid);
         gridSize = 30;
         squareSize = width / gridSize;
         grid = new Array();
@@ -64,8 +66,11 @@
         }
     }
 
+    function mousePressed() {
+
+    }
+
     function calculateGrid() {
-        if (!mousePressed) {
             for (var i = 1; i < gridSize - 1; i++) {
                 for (var j = 1; j < gridSize - 1; j++) {
                     var neighbours = 0;
@@ -85,13 +90,12 @@
             }  
             grid = next;
             next = new Array();
-            for (i = 0; i < gridLength; i++) {
+            for (i = 0; i < gridSize; i++) {
                 next[i] = new Array();
-                for (j = 0; j < gridHeight; j++) {
+                for (j = 0; j < gridSize; j++) {
                     next[i][j] = 0;
                 }
             }
-        }
     }
 
     function mouseDragged() {
