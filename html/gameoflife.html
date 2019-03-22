@@ -71,14 +71,14 @@
             for (i = 1; i < gridLength - 1; i++) {
                 for (j = 1; j < gridHeight - 1; j++) {
                     neighbours = 0;
-                    if (grid[j - 1][i + 1] === 1) neighbours++;
-                    if (grid[j][i + 1] === 1) neighbours++;
-                    if (grid[j + 1][i + 1] === 1) neighbours++;
-                    if (grid[j - 1][i] === 1) neighbours++;
-                    if (grid[j + 1][i] === 1) neighbours++;
-                    if (grid[j - 1][i - 1] === 1) neighbours++;
-                    if (grid[j][i - 1] === 1) neighbours++;
-                    if (grid[j + 1][i - 1] === 1) neighbours++;
+                    if (grid[i-1][j+1] === 1) neighbours++;
+                    if (grid[i][j+1] === 1) neighbours++;
+                    if (grid[i+1][j+1] === 1) neighbours++;
+                    if (grid[i+1][j] === 1) neighbours++;
+                    if (grid[i-1][j] === 1) neighbours++;
+                    if (grid[i-1][j-1] === 1) neighbours++;
+                    if (grid[i][j-1] === 1) neighbours++;
+                    if (grid[i+1][j-1] === 1) neighbours++;
 
                     if (grid[i][j] === 0) {
                         if (neighbours === 3) next[i][j] = 1;
