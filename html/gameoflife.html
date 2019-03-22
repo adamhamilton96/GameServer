@@ -53,7 +53,7 @@
         for (i = 0; i < gridLength; i++) {
             grid[i] = new Array();
             for (j = 0; j < gridHeight; j++) {
-                if (random() > 0.7) grid[i][j] = 1;
+                if (random() > 0.85) grid[i][j] = 1;
                 else grid[i][j] = 0;
             }
         }
@@ -90,6 +90,13 @@
                 }
             }
             grid = next;
+            next = new Array();
+            for (i = 0; i < gridLength; i++) {
+            next[i] = new Array();
+            for (j = 0; j < gridHeight; j++) {
+                next[i][j] = 0;
+            }
+        }
         }
     }
 
