@@ -31,7 +31,7 @@ func main() {
 
 	// Singleplayer
 
-	// Cellular Automaton
+	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
 	http.HandleFunc("/langtonsant/", langtonsAntHandler)
 	http.HandleFunc("/briansbrain/", briansBrainHandler)
