@@ -153,9 +153,9 @@
     }
 
     function submitScore(id) {
+        var name = document.getElementById(id).value;
         var value = document.getElementById(id).value;
-        socket.send(bestScore);
-        alert(bestScore);
+        socket.send(name + " " + bestScore);
     }
 
     </script>
