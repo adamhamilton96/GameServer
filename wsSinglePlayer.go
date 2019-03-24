@@ -36,7 +36,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 		} else if err = conn.WriteMessage(msgType, msg); err != nil {
 			return
 		} else {
-			fmt.Println(string(msg))
+			fmt.Println("Flappy Bird New Score: " + string(msg))
 			f, err := os.OpenFile("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 			if err != nil {
 				log.Fatal(err)
@@ -84,11 +84,7 @@ func readTopScores() []bestScore {
 		sortedList = append(sortedList, highestScore)
 		fullList = remove(fullList, index)
 	}
-	fmt.Println(sortedList)
 	return sortedList
-	//s := strings.Split(scanner.Text(), " ")
-	//s := strings.Split(scanner.Text(), " ")
-	//num, _ := strconv.Atoi(s[1])
 }
 
 func remove(s []bestScore, i int) []bestScore {

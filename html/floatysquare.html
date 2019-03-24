@@ -8,7 +8,7 @@
     <input type="text" onclick="clearName('name')" id="name"  value="Name:" align="right" />
     <br/>
     <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
-    <textarea id="txtScores" rows="10" cols="50" style="float: right; margin-right: 13%; margin-top: 2%">Top Scores
+    <textarea id="txtScores" rows="11" cols="50" style="float: right; margin-right: 13%; margin-top: 2%">Top Scores
     </textarea>
     <br></br>
     <script> 
@@ -90,8 +90,6 @@
     };
 
     socket.onmessage = function(e) {
-        console.log(e.data);
-        var scores = e.data.split(" ");
         document.getElementById("txtScores").value = e.data;
     };
 
@@ -168,6 +166,7 @@
         var name = document.getElementById(id).value;
         var value = document.getElementById(id).value;
         socket.send(name + " " + bestScore);
+        location.reload();
     }
 
     </script>
