@@ -5,8 +5,12 @@
 </head>
 <body>
     <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <input type="text" onclick="clearName('name')" id="name"  value="Name:" align="right" />
+    <br/>
+    <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
     <br></br>
     <script> 
+    var socket = new WebSocket("ws://haxxion.xyz:80/floatysquareecho");
 
     // Wall "Class"
     function Wall(x, y, lenx, leny, velx) {
@@ -142,6 +146,15 @@
                 setup();
             }
         }
+    }
+    
+    function clearName(id) {
+        document.getElementById(id).value = "";
+    }
+
+    function submitScore(id) {
+        var value = document.getElementById(id).value;
+        socket.send(bestScore);
     }
 
     </script>
