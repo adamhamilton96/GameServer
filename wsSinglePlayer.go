@@ -36,7 +36,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 		} else if err = conn.WriteMessage(msgType, msg); err != nil {
 			return
 		} else {
-			fmt.Println("Flappy Bird New Score: " + string(msg))
+			fmt.Println("Floaty Square New Score: " + string(msg))
 			f, err := os.OpenFile("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 			if err != nil {
 				log.Fatal(err)
