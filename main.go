@@ -30,6 +30,7 @@ func main() {
 	http.HandleFunc("/connect4echo", connect4EchoHandler)
 
 	// Singleplayer
+	http.HandleFunc("/floatysquare/", floatySquareHandler)
 
 	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
