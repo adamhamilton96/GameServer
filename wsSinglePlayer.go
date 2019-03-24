@@ -19,6 +19,8 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		} else if err = conn.WriteMessage(msgType, msg); err != nil {
+			return
+		} else {
 			fmt.Println(msg)
 			num, _ := strconv.Atoi(string(msg))
 			fmt.Println(num)
@@ -30,7 +32,6 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("wrote %d bytes\n", n3)
 			f.Sync()
 			fmt.Println("written")
-			return
 		}
 	}
 }
