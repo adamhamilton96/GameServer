@@ -24,7 +24,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(msg)
 			num, _ := strconv.Atoi(string(msg))
 			fmt.Println(num)
-			f, err := os.Create("/tmp/dat2")
+			f, err := os.Create("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/f,floatySquareScores")
 			check(err)
 			defer f.Close()
 
