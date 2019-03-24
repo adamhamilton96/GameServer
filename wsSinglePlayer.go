@@ -30,7 +30,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			sortedScores := readTopScores()
 			strScores := ""
 			for i := 0; i < len(sortedScores); i++ {
-				strScores += sortedScores[i].name + "/t" + strconv.Itoa(sortedScores[i].score) + "/n"
+				strScores += sortedScores[i].name + "\t" + strconv.Itoa(sortedScores[i].score) + "\n"
 			}
 			conn.WriteMessage(msgType, []byte(strScores))
 		} else if err = conn.WriteMessage(msgType, msg); err != nil {
