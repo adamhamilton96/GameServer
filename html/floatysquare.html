@@ -165,8 +165,18 @@
     function submitScore(id) {
         var name = document.getElementById(id).value;
         var value = document.getElementById(id).value;
-        socket.send(name + " " + bestScore);
-        location.reload();
+        var containsSpace = false;
+        for(var i = 0; i < name.length; i++) {
+            if(name.charAt(i) = " ") {
+                containsSpace = true;
+            }
+        }
+        if(containsSpace == true){
+            alert("No spaces in name");
+        } else {
+            socket.send(name + " " + bestScore);
+            location.reload();
+        }
     }
 
     </script>
