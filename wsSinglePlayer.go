@@ -68,10 +68,10 @@ func readTopScores() {
 		highestScore := bestScore{"", 0}
 		index := 0
 		for j := 0; j < len(fullList); j++ {
-			if fullList[i].score > highestScore.score {
-				highestScore.name = fullList[i].name
-				highestScore.score = fullList[i].score
-				index = i
+			if fullList[j].score > highestScore.score {
+				highestScore.name = fullList[j].name
+				highestScore.score = fullList[j].score
+				index = j
 			}
 		}
 		sortedList = append(sortedList, highestScore)
