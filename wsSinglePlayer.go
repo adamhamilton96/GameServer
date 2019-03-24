@@ -26,6 +26,13 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 		msgType, msg, err := conn.ReadMessage()
 		if err != nil {
 			return
+		} else if string(msg) == "SOCKET_OPEN" {
+			sortedScores := readTopScores()
+			strScores := ""
+			for i := 0; i < len(sortedScores); i++ {
+				strScores += sortedScores[i].name + "/t" + strconv.Itoa(sortedScores[i].score) + "/n"
+			}
+			conn.WriteMessage(msgType, []byte(strScores))
 		} else if err = conn.WriteMessage(msgType, msg); err != nil {
 			return
 		} else {
@@ -44,7 +51,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func readTopScores() {
+func readTopScores() []bestScore {
 	file, err := os.Open("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt")
 	if err != nil {
 		log.Fatal(err)
@@ -78,7 +85,7 @@ func readTopScores() {
 		fullList = remove(fullList, index)
 	}
 	fmt.Println(sortedList)
-
+	return sortedList
 	//s := strings.Split(scanner.Text(), " ")
 	//s := strings.Split(scanner.Text(), " ")
 	//num, _ := strconv.Atoi(s[1])

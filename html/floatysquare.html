@@ -83,6 +83,14 @@
     var speed;
     var timer;
 
+    socket.onopen = function() {
+        socket.send("SOCKET_OPEN");
+    };
+
+    socket.onmessage = function(e) {
+        console.log(e.data);
+    };
+
     function setup() {
         createCanvas(1280, 720);
         p = new Player(100, 540, 30, -4);
