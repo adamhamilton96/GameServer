@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -21,23 +22,20 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 		} else if err = conn.WriteMessage(msgType, msg); err != nil {
 			return
 		} else {
-			fmt.Println(msg)
 			num, _ := strconv.Atoi(string(msg))
 			fmt.Println(num)
-			f, err := os.Create("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScores")
-			check(err)
-			defer f.Close()
 
-			n3, err := f.WriteString(strconv.Itoa(num) + "\n")
-			fmt.Printf("wrote %d bytes\n", n3)
-			f.Sync()
-			fmt.Println("written")
+			f, err := os.OpenFile("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}
+			if _, err := f.Write([]byte(strconv.Itoa(num) + "\n")); err != nil {
+				log.Fatal(err)
+			}
+			if err := f.Close(); err != nil {
+				log.Fatal(err)
+			}
+			f.Close()
 		}
-	}
-}
-
-func check(e error) {
-	if e != nil {
-		panic(e)
 	}
 }
