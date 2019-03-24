@@ -8,6 +8,8 @@
     <input type="text" onclick="clearName('name')" id="name"  value="Name:" align="right" />
     <br/>
     <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
+    <textarea id="txtScores" rows="10" cols="50" style="float: right; margin-right: 13%; margin-top: 2%">Top Scores
+    </textarea>
     <br></br>
     <script> 
     var socket = new WebSocket("ws://haxxion.xyz:80/floatysquareecho");
@@ -56,8 +58,8 @@
 
         this.move = function() {
             this.y -= this.vely;
-            if(this.y <= 0 + this.diameter + 5) {
-                this.vely = 0;
+            if(this.y <= 0 + this.diameter) {
+                this.vely = -5;
              } else if(mouseIsPressed && this.vely <= 9) {
                 this.vely += 2;
             } else if(this.y >= height - this.diameter -5){
@@ -89,6 +91,8 @@
 
     socket.onmessage = function(e) {
         console.log(e.data);
+        var scores = e.data.split(" ");
+        document.getElementById("txtScores").value = e.data;
     };
 
     function setup() {
