@@ -40,5 +40,7 @@ func main() {
 	http.HandleFunc("/wireworld/", wireWorldHandler)
 	http.HandleFunc("/sandpiles/", sandPilesHandler)
 
+	readTopScores()
+
 	log.Fatal(http.ListenAndServe(":80", nil))
 }

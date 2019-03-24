@@ -1,13 +1,21 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 )
 
 // Floaty Square
+type bestScore struct {
+	name  string
+	score int
+}
+
 func floatySquareHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/floatysquare.html")
 }
@@ -34,4 +42,49 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+}
+
+func readTopScores() {
+	file, err := os.Open("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	var fullList []bestScore
+	var sortedList []bestScore
+	for scanner.Scan() {
+		s := strings.Split(scanner.Text(), " ")
+		name := s[0]
+		score, _ := strconv.Atoi(s[1])
+		newScore := bestScore{name, score}
+		fullList = append(fullList, newScore)
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	for i := 0; i < 10; i++ {
+		highestScore := bestScore{"", 0}
+		index := 0
+		for j := 0; j < len(fullList); j++ {
+			if fullList[i].score > highestScore.score {
+				highestScore.name = fullList[i].name
+				highestScore.score = fullList[i].score
+				index = i
+			}
+		}
+		sortedList = append(sortedList, highestScore)
+		fullList = remove(fullList, index)
+	}
+	fmt.Println(sortedList)
+
+	//s := strings.Split(scanner.Text(), " ")
+	//s := strings.Split(scanner.Text(), " ")
+	//num, _ := strconv.Atoi(s[1])
+}
+
+func remove(s []bestScore, i int) []bestScore {
+	s[len(s)-1], s[i] = s[i], s[len(s)-1]
+	return s[:len(s)-1]
 }
