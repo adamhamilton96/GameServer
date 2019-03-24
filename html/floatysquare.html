@@ -1,0 +1,143 @@
+<head>
+    <title>Floaty Square</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+</head>
+<body>
+    <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <br></br>
+    <script> 
+
+    // Wall "Class"
+    function Wall(x, y, lenx, leny, velx) {
+        this.x = x;
+        this.y = y;
+        this.lenx = lenx;
+        this.leny = leny;
+        this.velx = velx;
+
+        this.move = function() {
+            this.x -= this.velx;
+        }
+
+        this.display = function() {
+            noStroke();
+            fill(0, 80, 0);
+            rect(this.x, this.y, this.lenx, this.leny);
+        }
+
+        this.getX = function() {
+            return this.x;
+        }
+
+        this.intersects = function(p) {
+            if(p.x < this.x + this.lenx && p.x + p.diameter > this.x && p.y < this.y + this.leny && p.y + p.diameter > this.y) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    // Player Class
+    function Player(x, y, diameter, vely) {
+        this.x = x;
+        this.y = y;
+        this.diameter = diameter;
+        this.vely = vely;
+
+        this.setY = function(y) {
+            this.y = y;
+        }
+
+        this.move = function() {
+            this.y -= this.vely;
+            if(this.y <= 0 + this.diameter + 5 || this.y >= height - this.diameter -5) {
+                this.vely = 0;
+             } else if(mouseIsPressed && this.vely <= 6) {
+                this.vely += 2;
+            } else if(this.vely > -9) {
+                this.vely -= 1;
+            }
+        }
+
+        this.display = function() {
+            noStroke();
+            fill(175, 0, 0);
+            rect(this.x, this.y, this.diameter, this.diameter);
+        }
+    }
+
+    var topWalls;
+    var bottomWalls;
+    var p;
+    var bestScore = 0;
+    var score;
+    var gap;
+    var timer;
+
+    function setup() {
+        createCanvas(1280, 720);
+        p = new Player(100, 540, 30, -4);
+        gap = 200;
+        timer = 30;
+        score = 0;
+        topWalls = [];
+        bottomWalls = [];
+        clearArrays();
+        p.setY(height/2);
+    }
+
+    function clearArrays() {
+        for(var i = topWalls.length; i > 0; i--) {
+            topWalls.splice(i);
+        }
+    }
+
+    function resize(arr, newSize, defaultValue) {
+        if (newSize > arr.length)
+            while(newSize > arr.length)
+                arr.push(defaultValue);
+        else
+            arr.length = newSize;
+    }
+
+    function draw() {
+        background(0, 191, 255);
+        timer++;
+        textSize(72);
+        fill(255);
+        text(score, 1100, height / 2);
+        fill(255, 0, 0);
+        text(bestScore, 1100, height /2 + 75);
+        p.move();
+        p.display();
+
+        if(timer > 65) {
+            timer = 0;
+            randomSeed(window.performance.now());
+            var topWallSize = random(120, 300);
+            var tw = new Wall(1280, 0,                 50, topWallSize,             10);
+            var bw = new Wall(1280, topWallSize + gap, 50, 720 - gap - topWallSize, 10);
+            resize(topWalls, topWalls.length + 1, tw);
+            resize(bottomWalls, bottomWalls.length + 1, bw);
+        }
+
+        for(var w = 0; w < topWalls.length; w++) {
+            topWalls[w].move();
+            topWalls[w].display();
+            bottomWalls[w].move();
+            bottomWalls[w].display();
+            if(topWalls[w].getX() < -120) {
+                topWalls.splice(w, 1);
+                bottomWalls.splice(w, 1);
+                score++;
+                if(score > bestScore) bestScore++;
+            } else if(bottomWalls[w].intersects(p) || topWalls[w].intersects(p)) {
+                setup();
+            }
+        }
+    }
+
+    </script>
+</body>
