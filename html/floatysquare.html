@@ -149,7 +149,7 @@
             topWalls[w].display();
             bottomWalls[w].move();
             bottomWalls[w].display();
-            if(topWalls[w].getX() < 50 && topWalls.scored === false) {
+            if(topWalls[w].getX() < 50 && topWalls[w].scored === false) {
                 score++;
                 if(score > bestScore) bestScore++;
                 topWalls[w].scored = true;
