@@ -27,6 +27,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		} else if string(msg) == "SOCKET_OPEN" {
+			fmt.Println("User playing Floaty Square")
 			sortedScores := readTopScores()
 			strScores := ""
 			for i := 0; i < len(sortedScores); i++ {
