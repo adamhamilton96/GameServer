@@ -53,6 +53,8 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func readTopScores() []bestScore {
+
+	// Open file
 	file, err := os.Open("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt")
 	if err != nil {
 		log.Fatal(err)
@@ -62,16 +64,20 @@ func readTopScores() []bestScore {
 	scanner := bufio.NewScanner(file)
 	var fullList []bestScore
 	var sortedList []bestScore
+	// for each line in txt file
 	for scanner.Scan() {
+		// split into name and score
 		s := strings.Split(scanner.Text(), " ")
 		name := s[0]
 		score, _ := strconv.Atoi(s[1])
 		newScore := bestScore{name, score}
+		// add to array
 		fullList = append(fullList, newScore)
 	}
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+	// top 10 best scores
 	for i := 0; i < 10; i++ {
 		highestScore := bestScore{"", 0}
 		index := 0
@@ -82,7 +88,9 @@ func readTopScores() []bestScore {
 				index = j
 			}
 		}
+		// add to top 10 list
 		sortedList = append(sortedList, highestScore)
+		// remove original so not refound
 		fullList = remove(fullList, index)
 	}
 	return sortedList
