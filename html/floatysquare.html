@@ -152,6 +152,7 @@
             if(topWalls[w].getX() < 50 && topWalls.scored === false) {
                 score++;
                 if(score > bestScore) bestScore++;
+                topWalls[w].scored = true;
             }
             if(topWalls[w].getX() < -1000) {
                 topWalls.splice(w, 1);
