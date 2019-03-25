@@ -21,6 +21,7 @@
         this.lenx = lenx;
         this.leny = leny;
         this.velx = velx;
+        this.scored = false;
 
         this.move = function() {
             this.x -= this.velx;
@@ -148,11 +149,13 @@
             topWalls[w].display();
             bottomWalls[w].move();
             bottomWalls[w].display();
+            if(topWalls[w].getX() < 50 && topWalls.scored === false) {
+                score++;
+                if(score > bestScore) bestScore++;
+            }
             if(topWalls[w].getX() < -1000) {
                 topWalls.splice(w, 1);
                 bottomWalls.splice(w, 1);
-                score++;
-                if(score > bestScore) bestScore++;
             } else if(bottomWalls[w].intersects(p) || topWalls[w].intersects(p)) {
                 setup();
             }
