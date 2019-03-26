@@ -28,7 +28,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		} else if string(msg) == "SOCKET_OPEN" {
 			fmt.Println("User playing Floaty Square")
-			sortedScores := readTopScores()
+			sortedScores := readTopScores("floatySquareScore.txt")
 			strScores := ""
 			for i := 0; i < len(sortedScores); i++ {
 				strScores += sortedScores[i].name + "\t" + strconv.Itoa(sortedScores[i].score) + "\n"
@@ -58,13 +58,41 @@ func snakeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
-
+	conn, _ := upgrader.Upgrade(w, r, nil)
+	for {
+		msgType, msg, err := conn.ReadMessage()
+		if err != nil {
+			return
+		} else if string(msg) == "SOCKET_OPEN" {
+			fmt.Println("User playing Snake")
+			sortedScores := readTopScores("snakeScore.txt")
+			strScores := ""
+			for i := 0; i < len(sortedScores); i++ {
+				strScores += sortedScores[i].name + "\t" + strconv.Itoa(sortedScores[i].score) + "\n"
+			}
+			conn.WriteMessage(msgType, []byte(strScores))
+		} else if err = conn.WriteMessage(msgType, msg); err != nil {
+			return
+		} else {
+			fmt.Println("Snake New Score: " + string(msg))
+			f, err := os.OpenFile("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/snakeScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}
+			if _, err := f.Write([]byte(string(msg) + "\n")); err != nil {
+				log.Fatal(err)
+			}
+			if err := f.Close(); err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
 }
 
-func readTopScores() []bestScore {
+func readTopScores(path string) []bestScore {
 
 	// Open file
-	file, err := os.Open("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt")
+	file, err := os.Open("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/" + path)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -95,6 +95,14 @@
         foodLocation();
     }
 
+    socket.onopen = function() {
+        socket.send("SOCKET_OPEN");
+    };
+
+    socket.onmessage = function(e) {
+        document.getElementById("txtScores").value = "Top Scores:\n" + e.data;
+    };
+
     function foodLocation() {
         let x = floor(random(w));
         let y = floor(random(h));
@@ -137,6 +145,26 @@
         noStroke();
         fill(255);
         rect(food.x, food.y, 1, 1);
+    }
+
+    function clearName(id) {
+        document.getElementById(id).value = "";
+    }
+
+    function submitScore(id) {
+        var name = document.getElementById(id).value;
+        var containsSpace = false;
+        for(var i = 0; i < name.length; i++) {
+            if(name.charAt(i) === " ") {
+                containsSpace = true;
+            }
+        }
+        if(containsSpace == true){
+            alert("No spaces in name");
+        } else {
+            socket.send(name + " " + bestScore);
+            location.reload();
+        }
     }
     </script>
 </body>
