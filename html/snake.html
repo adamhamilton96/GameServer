@@ -1,5 +1,5 @@
 <head>
-    <title>Floaty Square</title>
+    <title>Snake</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
 </head>
@@ -8,7 +8,7 @@
     <input type="text" onclick="clearName('name')" id="name"  value="Name:" align="right" />
     <br/>
     <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
-    <textarea id="txtScores" rows="11" cols="50" style="float: right; margin-right: 13%; margin-top: 2%">Top Scores
+    <textarea readonly id="txtScores" rows="11" cols="50" style="float: right; margin-right: 30%; margin-top: 2%">Top Scores:
     </textarea>
     <br></br>
     <script> 
@@ -70,7 +70,7 @@
         
         show() {
             for(let i = 0; i < this.body.length; i++) {
-                fill(0);
+                fill(255, 0, 0);
             noStroke();
             rect(this.body[i].x, this.body[i].y, 1, 1)
             }
@@ -82,12 +82,15 @@
     let food;
     let w;
     let h;
+    var score;
+    var topScore = 0;
 
     function setup() {
-        createCanvas(400, 400);
-        w = floor(width / rez);
+        createCanvas(900, 800);
+        w = floor(800 / rez);
         h = floor(height / rez);
-        frameRate(5);
+        frameRate(15);
+        score = 0;
         snake = new Snake();
         foodLocation();
     }
@@ -107,26 +110,32 @@
             snake.setDir(0, 1);
         } else if (keyCode === UP_ARROW) {
             snake.setDir(0, -1);
-        } else if (key == ' ') {
-            snake.grow();
         }
     }
 
     function draw() {
+        background(255);
+        fill(0);
+        rect(0, 0, 800, 800);
+        textSize(72);
+        fill(0, 255, 0);
+        text(score, 810, 100);
+        fill(255, 0, 0);
+        text(topScore, 810, 200);
         scale(rez);
-        background(220);
         if (snake.eat(food)) {
             foodLocation();
+            score++;
+            if(score > topScore) topScore++;
         }
         snake.update();
         snake.show();
         if (snake.endGame()) {
             print("END GAME");
-            background(255, 0, 0);
             noLoop();
         }
         noStroke();
-        fill(255, 0, 0);
+        fill(255);
         rect(food.x, food.y, 1, 1);
     }
     </script>
