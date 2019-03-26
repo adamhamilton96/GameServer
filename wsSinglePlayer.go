@@ -52,6 +52,15 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Snake
+func snakeHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/snake.html")
+}
+
+func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func readTopScores() []bestScore {
 
 	// Open file

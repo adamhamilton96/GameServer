@@ -30,8 +30,12 @@ func main() {
 	http.HandleFunc("/connect4echo", connect4EchoHandler)
 
 	// Singleplayer
+	// FloatySquare
 	http.HandleFunc("/floatysquare/", floatySquareHandler)
 	http.HandleFunc("/floatysquareecho", floatySquareEchoHandler)
+	// Snake
+	http.HandleFunc("/snake/", snakeHandler)
+	http.HandleFunc("/snakeecho", snakeEchoHandler)
 
 	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
