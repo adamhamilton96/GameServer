@@ -17,7 +17,7 @@ type bestScore struct {
 }
 
 func floatySquareHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/floatysquare.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/floatysquare.html")
 }
 
 func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +38,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			fmt.Println("Floaty Square New Score: " + string(msg))
-			f, err := os.OpenFile("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			f, err := os.OpenFile("/home/adamhamilton2005/Code/Go/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -54,7 +54,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 
 // Snake
 func snakeHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/snake.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/snake.html")
 }
 
 func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +75,7 @@ func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			fmt.Println("Snake New Score: " + string(msg))
-			f, err := os.OpenFile("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/snakeScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			f, err := os.OpenFile("/home/adamhamilton2005/Code/Go/GameServer/txt/snakeScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -92,7 +92,7 @@ func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
 func readTopScores(path string) []bestScore {
 
 	// Open file
-	file, err := os.Open("/home/haxxionlaptop/Documents/Code/Go/GameServer/txt/" + path)
+	file, err := os.Open("/home/adamhamilton2005/Code/Go/GameServer/txt/" + path)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,21 +3,21 @@ package main
 import "net/http"
 
 func gameOfLifeHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/gameoflife.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/gameoflife.html")
 }
 
 func langtonsAntHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/langtonsant.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/langtonsant.html")
 }
 
 func briansBrainHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/briansbrain.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/briansbrain.html")
 }
 
 func wireWorldHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/wireworld.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/wireworld.html")
 }
 
 func sandPilesHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/sandpiles.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/sandpiles.html")
 }

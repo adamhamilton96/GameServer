@@ -141,7 +141,7 @@ func connect4EchoHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func connect4Handler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxionlaptop/Documents/Code/Go/GameServer/html/connect4.html")
+	http.ServeFile(w, r, "/home/adamhamilton2005/Code/Go/GameServer/html/connect4.html")
 }
 
 func checkDraw() bool {
