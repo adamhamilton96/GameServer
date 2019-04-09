@@ -44,5 +44,5 @@ func main() {
 	http.HandleFunc("/wireworld/", wireWorldHandler)
 	http.HandleFunc("/sandpiles/", sandPilesHandler)
 
-	log.Fatal(http.ListenAndServe(":80", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
