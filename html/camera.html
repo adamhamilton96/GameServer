@@ -1,0 +1,186 @@
+<head>
+    <title>Camera Stippling</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
+</head>
+<body>
+    <style>
+        a:visited {
+            color: white;
+        }
+        body {
+            color: white;
+            background-color: rgb(51, 51, 51);
+        }
+    </style>
+    <p><a href="/" style="font-size: 32px">[back]</a></p>
+    <p style="font-size: 32px">Change number of points at bottom</a></p>
+    <script>
+          
+        let points = [];
+        let delaunay, voronoi;
+        let video;
+        let videoWidth// = 640;
+        let videoHeight// = 360;
+        let started = false;
+        let canvasWidth = 1280;
+        let canvasHeight = 720
+        let pointInput;
+        let sizeInput;
+        let colourEnabled = false;
+
+        function setup() {
+            let details = navigator.userAgent;
+            let regexp = /android|iphone/i;
+            let isMobileDevice = regexp.test(details);
+            if (isMobileDevice) {
+                createCanvas(canvasHeight,canvasWidth);
+                videoWidth = 360;
+                videoHeight = 640;
+            } else {
+                createCanvas(canvasWidth,canvasHeight);
+                videoWidth = 640;
+                videoHeight = 360;
+            }
+            let constraints = {
+                video: {
+                    optional: [{ maxFrameRate: 30, flipped: true }]
+                },
+                audio: false
+            };
+            debug = false;
+
+            pointInput = createInput(2000);
+            pointInput.input(isNumber)
+            let btnUpdate = createButton('Update');
+            btnUpdate.mousePressed(init);
+            sizeInput = createInput(8);
+            sizeInput.input(isNumber)
+            let btnToggleColour = createButton('Toggle Colour');
+            btnToggleColour.mousePressed(toggleColour);
+            video = createCapture(constraints, videoReady);
+            video.size(videoWidth, videoHeight);
+            video.hide();
+        }
+
+        function videoReady() {
+            init();
+        }
+
+        function isNumber() {
+            let s = this.value();
+            let c = s.charCodeAt(s.length - 1);
+            if (!(c > 47 && c < 58)) {
+                this.value(s.substring(0,s.length-1));
+            }
+        } 
+
+        function init() {
+            points = [];
+            for (let i = 0; i < pointInput.value(); i++) {
+                let x = random(videoWidth);
+                let y = random(videoHeight);
+                let col = video.get(x, y);
+                points.push(createVector(x, y));
+            }
+            delaunay = calculateDelaunay(points);
+            voronoi = delaunay.voronoi([0, 0, videoWidth, videoHeight]);
+            started = true;
+        }
+
+        function toggleColour() {
+            colourEnabled = !colourEnabled;
+            console.log*(colourEnabled);
+        }
+
+        function draw() {
+            scale(2);
+            if (started) {
+                background(255);
+                let polygons = voronoi.cellPolygons();
+                let cells = Array.from(polygons);
+
+                let centroids = new Array(cells.length);
+                let weights = new Array(cells.length).fill(0);
+                let counts = new Array(cells.length).fill(0);
+                let avgWeights = new Array(cells.length).fill(0);
+                for (let i = 0; i < centroids.length; i++) {
+                    centroids[i] = createVector(0, 0);
+                }
+
+                video.loadPixels();
+                let delaunayIndex = 0;
+                for (let i = 0; i < videoWidth; i++) {
+                    for (let j = 0; j < videoHeight; j++) {
+                        let index = (i + j * videoWidth) * 4;
+                        let r = video.pixels[index + 0];
+                        let g = video.pixels[index + 1];
+                        let b = video.pixels[index + 2];
+                        let bright = (r + g + b) / 3;
+                        let weight = 1 - bright / 255;
+                        delaunayIndex = delaunay.find(i, j, delaunayIndex);
+                        centroids[delaunayIndex].x += i * weight;
+                        centroids[delaunayIndex].y += j * weight;
+                        weights[delaunayIndex] += weight;
+                        counts[delaunayIndex]++;
+                    }
+                }
+
+                let maxWeight = 0;
+                for (let i = 0; i < centroids.length; i++) {
+                    if (weights[i] > 0) {
+                        centroids[i].div(weights[i]);
+                        avgWeights[i] = weights[i] / (counts[i] || 1);
+                        if (avgWeights[i] > maxWeight) {
+                        maxWeight = avgWeights[i];
+                        }
+                    } else {
+                        centroids[i] = points[i].copy();
+                    }
+                }
+
+                for (let i = 0; i < points.length; i++) {
+                    points[i].lerp(centroids[i], 1);
+                }
+
+                for (let i = 0; i < points.length; i++) {
+                    let v = points[i];
+                    let index = (floor(v.x) + floor(v.y) * videoWidth) * 4;
+                    let r = video.pixels[index + 0];
+                    let g = video.pixels[index + 1];
+                    let b = video.pixels[index + 2];
+
+                    let sw = map(avgWeights[i], 0, maxWeight, 0, sizeInput.value(), true);
+                    strokeWeight(sw);
+                    if (colourEnabled) {
+                        stroke(color(r, g, b));
+                    } else {
+                        stroke(51);
+                    }
+                    point(v.x, v.y);
+                }
+
+                delaunay = calculateDelaunay(points);
+                voronoi = delaunay.voronoi([0, 0, videoWidth, videoHeight]);
+                
+                if (debug) {
+                    textSize(30);
+                    fill(255);
+                    stroke(0);
+                    strokeWeight(4);
+                    text(frameRate(), 0, 20);
+                    noFill();
+                }
+            }
+        }
+
+        function calculateDelaunay(points) {
+            let pointsArray = [];
+            for (let v of points) {
+                pointsArray.push(v.x, v.y);
+            }
+            return new d3.Delaunay(pointsArray);
+        }
+      </script>
+</body>

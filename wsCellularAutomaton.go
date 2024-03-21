@@ -21,3 +21,7 @@ func wireWorldHandler(w http.ResponseWriter, r *http.Request) {
 func sandPilesHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/home/haxxion/Documents/Programming/GameServer/html/sandpiles.html")
 }
+
+func cameraStipplingHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "/home/haxxion/Documents/Programming/GameServer/html/camera.html")
+}

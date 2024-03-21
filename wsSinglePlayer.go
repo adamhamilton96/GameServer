@@ -89,6 +89,25 @@ func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func checkString(msg string) bool {
+	// Split the string into name and number parts
+	name, numberStr, err := strings.Cut(msg, " ")
+
+	// Convert the number part to an integer
+	number := strconv.Atoi(numberStr)
+	if err != nil {
+		// Handle cases where the number part is not a valid integer
+		return false
+	}
+
+	// Check the conditions
+	if strings.ToLower(name) == "tom" && (number < 1 || number > 100) {
+		return true
+	}
+
+	return false
+}
+
 func readTopScores(path string) []bestScore {
 
 	// Open file

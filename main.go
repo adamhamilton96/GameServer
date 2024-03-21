@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,12 +15,22 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
+var (
+	CertFilePath = "/etc/letsencrypt/live/haxxion.hopto.org/fullchain.pem"
+	KeyFilePath  = "/etc/letsencrypt/live/haxxion.hopto.org/privkey.pem"
+)
+
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/home/haxxion/Documents/Programming/GameServer/html/home.html")
 }
 
 func main() {
-	fmt.Println("Haxxion.xyz Online :)")
+	// load tls certificates
+	serverTLSCert, err := tls.LoadX509KeyPair(CertFilePath, KeyFilePath)
+	if err != nil {
+		log.Fatalf("Error loading certificate and key file: %v", err)
+	}
+	fmt.Println("haxxion.hopto.org Online :)")
 
 	// Home
 	http.HandleFunc("/", rootHandler)
@@ -44,5 +55,16 @@ func main() {
 	http.HandleFunc("/wireworld/", wireWorldHandler)
 	http.HandleFunc("/sandpiles/", sandPilesHandler)
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	// Camera
+	http.HandleFunc("/stippling/", cameraStipplingHandler)
+
+	tlsConfig := &tls.Config{
+		Certificates: []tls.Certificate{serverTLSCert},
+	}
+	server := http.Server{
+		Addr:      ":443",
+		TLSConfig: tlsConfig,
+	}
+	defer server.Close()
+	log.Fatal(server.ListenAndServeTLS("", ""))
 }

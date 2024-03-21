@@ -4,10 +4,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
 </head>
 <body>
+    <style>
+        a:visited {
+            color: white;
+        }
+        body {
+            color: white;
+            background-color: rgb(51, 51, 51);
+        }
+    </style>
     <p><a href="/" style="font-size: 32px">[back]</a></p>
     <br></br>
     <script> 
-    var socket = new WebSocket("ws://localhost:8080/connect4echo");
+    var socket = new WebSocket("wss://haxxion.hopto.org/connect4echo");
     var boardHeight;
     var boardLength;
     var res;
