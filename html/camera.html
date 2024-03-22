@@ -43,12 +43,6 @@
                 videoWidth = 640;
                 videoHeight = 360;
             }
-            let constraints = {
-                video: {
-                    optional: [{ maxFrameRate: 30, flipped: true }]
-                },
-                audio: false
-            };
             debug = false;
 
             pointInput = createInput(2000);
@@ -59,7 +53,7 @@
             sizeInput.input(isNumber)
             let btnToggleColour = createButton('Toggle Colour');
             btnToggleColour.mousePressed(toggleColour);
-            video = createCapture(constraints, videoReady);
+            video = createCapture(VIDEO, videoReady);
             video.size(videoWidth, videoHeight);
             video.hide();
         }

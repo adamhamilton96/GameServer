@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // Floaty Square
@@ -38,15 +39,21 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			fmt.Println("Floaty Square New Score: " + string(msg))
-			f, err := os.OpenFile("/home/haxxion/Documents/Programming/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-			if err != nil {
-				log.Fatal(err)
-			}
-			if _, err := f.Write([]byte(string(msg) + "\n")); err != nil {
-				log.Fatal(err)
-			}
-			if err := f.Close(); err != nil {
-				log.Fatal(err)
+			if checkString(string(msg)) {
+				f, err := os.OpenFile("/home/haxxion/Documents/Programming/GameServer/txt/floatySquareScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+				if err != nil {
+					log.Fatal(err)
+				}
+				if _, err := f.Write([]byte(string(msg) + "\n")); err != nil {
+					log.Fatal(err)
+				}
+				if err := f.Close(); err != nil {
+					log.Fatal(err)
+				} else {
+					fmt.Println("Cheater detected")
+					fmt.Println(string(msg) + " not accepted")
+					conn.Close()
+				}
 			}
 		}
 	}
@@ -75,37 +82,58 @@ func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			fmt.Println("Snake New Score: " + string(msg))
-			f, err := os.OpenFile("/home/haxxion/Documents/Programming/GameServer/txt/snakeScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-			if err != nil {
-				log.Fatal(err)
-			}
-			if _, err := f.Write([]byte(string(msg) + "\n")); err != nil {
-				log.Fatal(err)
-			}
-			if err := f.Close(); err != nil {
-				log.Fatal(err)
+			if checkString(string(msg)) {
+				f, err := os.OpenFile("/home/haxxion/Documents/Programming/GameServer/txt/snakeScore.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+				if err != nil {
+					log.Fatal(err)
+				}
+				if _, err := f.Write([]byte(string(msg) + "\n")); err != nil {
+					log.Fatal(err)
+				}
+				if err := f.Close(); err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				fmt.Println("Cheater detected")
+				fmt.Println(string(msg) + " not accepted")
+				conn.Close()
 			}
 		}
 	}
 }
 
 func checkString(msg string) bool {
-	// Split the string into name and number parts
-	name, numberStr, err := strings.Cut(msg, " ")
-
-	// Convert the number part to an integer
-	number := strconv.Atoi(numberStr)
-	if err != nil {
-		// Handle cases where the number part is not a valid integer
+	words := strings.Fields(msg)
+	if len(words) != 2 {
+		return false
+	}
+	if !strings.ContainsAny(words[0], "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") {
 		return false
 	}
 
-	// Check the conditions
-	if strings.ToLower(name) == "tom" && (number < 1 || number > 100) {
-		return true
+	if !strings.ContainsAny(words[1], "0123456789") {
+		return false
 	}
 
-	return false
+	for _, r := range msg {
+		if !unicode.IsLetter(r) && !unicode.IsNumber(r) && !unicode.IsSpace(r) {
+			return false
+		}
+	}
+	score, err := strconv.Atoi(words[1])
+	if err != nil {
+		log.Fatal(err)
+		return false
+	}
+
+	if strings.ToLower(words[0]) == "Tom" && (score < 1 || score > 100) {
+		return false
+	}
+	if score < 1 || score > 500 {
+		return false
+	}
+
+	return true
 }
 
 func readTopScores(path string) []bestScore {
