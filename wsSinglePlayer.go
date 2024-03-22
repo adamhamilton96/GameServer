@@ -49,11 +49,11 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 				}
 				if err := f.Close(); err != nil {
 					log.Fatal(err)
-				} else {
-					fmt.Println("Cheater detected")
-					fmt.Println(string(msg) + " not accepted")
-					conn.Close()
 				}
+			} else {
+				fmt.Println("Cheater detected")
+				fmt.Println(string(msg) + " not accepted")
+				conn.Close()
 			}
 		}
 	}
