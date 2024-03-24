@@ -53,7 +53,7 @@ func floatySquareEchoHandler(w http.ResponseWriter, r *http.Request) {
 			} else {
 				fmt.Println("Cheater detected")
 				fmt.Println(string(msg) + " not accepted")
-				conn.Close()
+				conn.WriteMessage(msgType, []byte("Stop cheating loser"))
 			}
 		}
 	}
@@ -96,7 +96,7 @@ func snakeEchoHandler(w http.ResponseWriter, r *http.Request) {
 			} else {
 				fmt.Println("Cheater detected")
 				fmt.Println(string(msg) + " not accepted")
-				conn.Close()
+				conn.WriteMessage(msgType, []byte("Stop cheating loser"))
 			}
 		}
 	}
@@ -107,6 +107,11 @@ func checkString(msg string) bool {
 	if len(words) != 2 {
 		return false
 	}
+
+	if len(words[0]) > 20 {
+		return false
+	}
+
 	if !strings.ContainsAny(words[0], "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") {
 		return false
 	}
@@ -122,11 +127,13 @@ func checkString(msg string) bool {
 	}
 	score, err := strconv.Atoi(words[1])
 	if err != nil {
-		log.Fatal(err)
 		return false
 	}
 
 	if strings.ToLower(words[0]) == "Tom" && (score < 1 || score > 100) {
+		return false
+	}
+	if strings.ToLower(words[0]) == "JAMES" && (score < 1 || score > 20) {
 		return false
 	}
 	if score < 1 || score > 500 {

@@ -14,16 +14,18 @@
         }
     </style>
     <p><a href="/" style="font-size: 32px">[back]</a></p>
-    <input type="text" onclick="clearName('name')" id="name"  value="Name:" align="right" />
-    <br/>
-    <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
+    <div class="flex-container">
+        <p>name:  </p>
+        <input type="text" onclick="clearName('name')" id="name"  value="" align="right" />
+        <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
+    </div>
     <textarea readonly id="txtScores" rows="11" cols="50" style="float: right; margin-right: 13%; margin-top: 2%">Top Scores:
     </textarea>
     <br></br>
     <script> 
     var socket = new WebSocket("wss://haxxion.hopto.org/floatysquareecho");
 
-    // Wall "Class"
+    //Wall Class
     function Wall(x, y, lenx, leny, velx) {
         this.x = x;
         this.y = y;
@@ -55,7 +57,7 @@
         }
     }
 
-    // Player Class
+    //Player Class
     function Player(x, y, diameter, vely) {
         this.x = x;
         this.y = y;
@@ -70,7 +72,7 @@
             this.y -= this.vely;
             if(this.y <= 0 + this.diameter) {
                 this.vely = -5;
-             } else if(mouseIsPressed && this.vely <= 9) {
+             } else if((mouseIsPressed || keyIsPressed ) && this.vely <= 9) {
                 this.vely += 2;
             } else if(this.y >= height - this.diameter -5){
                 this.vely = 0;
@@ -100,7 +102,12 @@
     };
 
     socket.onmessage = function(e) {
-        document.getElementById("txtScores").value = "Top Scores:\n" + e.data;
+        console.log(e.data)
+        if (e.data === "Stop cheating loser") {
+            alert(e.data);
+        } else {
+            document.getElementById("txtScores").value = "Top Scores:\n" + e.data;
+        }
     };
 
     function setup() {
@@ -185,6 +192,8 @@
         }
         if(containsSpace == true){
             alert("No spaces in name");
+        } if (name.length === 0) {
+            alert("Enter name")
         } else {
             socket.send(name + " " + bestScore);
             location.reload();

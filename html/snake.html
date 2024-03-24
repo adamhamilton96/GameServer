@@ -14,9 +14,11 @@
         }
     </style>
     <p><a href="/" style="font-size: 32px">[back]</a></p>
-    <input type="text" onclick="clearName('name')" id="name"  value="Name:" align="right" />
-    <br/>
-    <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
+    <div class="flex-container">
+        <p>name:  </p>
+        <input type="text" onclick="clearName('name')" id="name"  value="" align="right" />
+        <button onclick="submitScore('name')" id="submitScore" align="right">Submit Best Score</button>
+    </div>
     <textarea readonly id="txtScores" rows="11" cols="50" style="float: right; margin-right: 30%; margin-top: 2%">Top Scores:
     </textarea>
     <br></br>
@@ -117,7 +119,11 @@
     };
 
     socket.onmessage = function(e) {
-        document.getElementById("txtScores").value = "Top Scores:\n" + e.data;
+        if (e.data === "Stop cheating loser") {
+            alert(e.data);
+        } else {
+            document.getElementById("txtScores").value = "Top Scores:\n" + e.data;
+        }
     };
 
     function foodLocation() {
@@ -186,8 +192,10 @@
                 containsSpace = true;
             }
         }
-        if(containsSpace === true){
+        if(containsSpace == true){
             alert("No spaces in name");
+        } if (name.length === 0) {
+            alert("Enter name");
         } else {
             socket.send(name + " " + topScore);
             location.reload();

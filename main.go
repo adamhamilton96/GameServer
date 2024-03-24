@@ -48,6 +48,9 @@ func main() {
 	http.HandleFunc("/snake/", snakeHandler)
 	http.HandleFunc("/snakeecho", snakeEchoHandler)
 
+	fs := http.FileServer(http.Dir("/home/haxxion/Documents/Programming/GameServer/"))
+	http.Handle("/benn/", addHeaders(fs))
+
 	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
 	http.HandleFunc("/langtonsant/", langtonsAntHandler)
@@ -67,4 +70,18 @@ func main() {
 	}
 	defer server.Close()
 	log.Fatal(server.ListenAndServeTLS("", ""))
+}
+
+// Benn
+func addHeaders(fs http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")          // Adjust methods as needed
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization") // Adjust headers as needed
+		w.Header().Set("X-Frame-Options", "DENY")
+		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
+		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
+		w.Header().Set("Cross-Origin-Resource-Policy", "cross-origin")
+		fs.ServeHTTP(w, r)
+	}
 }
