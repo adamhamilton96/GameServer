@@ -38,7 +38,7 @@ func main() {
 
 	// Home
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/media/yourvideo.mp4", videoHandler) 
+	http.Handle("/media/yourvideo.mp4", addVideoHeaders(fs)) 
 
 	// Multiplayer
 	// Connect4
@@ -87,6 +87,13 @@ func addHeaders(fs http.Handler) http.HandlerFunc {
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
 		w.Header().Set("Cross-Origin-Resource-Policy", "cross-origin")
+		fs.ServeHTTP(w, r)
+	}
+}
+
+func addVideoHeaders(fs http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "video/mp4")
 		fs.ServeHTTP(w, r)
 	}
 }
