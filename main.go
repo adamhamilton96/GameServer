@@ -24,6 +24,10 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/home/haxxion/GameServer/html/home.html")
 }
 
+func videoHandler(w http.ResponseWriter, r *http.Request) {
+    http.ServeFile(w, r, "/home/haxxion/GameServer/html/media/pedro.mp4")
+}
+
 func main() {
 	// load tls certificates
 	serverTLSCert, err := tls.LoadX509KeyPair(CertFilePath, KeyFilePath)
@@ -34,6 +38,7 @@ func main() {
 
 	// Home
 	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/media/yourvideo.mp4", videoHandler) 
 
 	// Multiplayer
 	// Connect4
