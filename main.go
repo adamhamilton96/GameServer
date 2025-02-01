@@ -21,7 +21,7 @@ var (
 )
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/home/haxxion/Documents/Programming/GameServer/html/home.html")
+	http.ServeFile(w, r, "/home/haxxion/GameServer/html/home.html")
 }
 
 func main() {
@@ -48,7 +48,7 @@ func main() {
 	http.HandleFunc("/snake/", snakeHandler)
 	http.HandleFunc("/snakeecho", snakeEchoHandler)
 
-	fs := http.FileServer(http.Dir("/home/haxxion/Documents/Programming/GameServer/"))
+	fs := http.FileServer(http.Dir("/home/haxxion/GameServer/"))
 	http.Handle("/benn/", addHeaders(fs))
 
 	// Cellular Automata
