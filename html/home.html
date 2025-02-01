@@ -38,7 +38,6 @@
         function preload() {
             img = new Image();
             img.src = "media/anivia.png";
-            vid = createVideo("media/pedro.mp4");
         }
 
         function setup() {
@@ -62,7 +61,7 @@
                     length: random(0, 25),
                 });
             }
-            //vid = createVideo("media/pedro.mp4");
+            vid = createVideo("media/pedro.mp4");
             vid.size(200, 200);
             vid.volume(0.3);
             vid.loop();
@@ -73,8 +72,8 @@
             counter++;
             background(0);
             //drawingContext.drawImage(img, width / 2 - 100, height / 2 - 100, 200, 200);
-            //let img = vid.get();
-            //image(img, width / 2 - 100, height / 2 - 100);
+            let img = vid.get();
+            image(img, width / 2 - 100, height / 2 - 100);
 
             for (let i = 0; i < bars.length; i++) {
                 let bar = bars[i];
