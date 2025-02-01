@@ -50,7 +50,7 @@ func main() {
 	
 	fs := http.FileServer(http.Dir("/home/haxxion/GameServer/"))
 	http.Handle("/benn/", addHeaders(fs))
-	http.Handle("/media/pedro.mp4", addVideoHeaders(fs)) 
+	http.Handle("/html/media/pedro.mp4", addVideoHeaders(fs)) 
 
 	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
