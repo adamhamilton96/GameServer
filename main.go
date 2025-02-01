@@ -24,10 +24,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/home/haxxion/GameServer/html/home.html")
 }
 
-func videoHandler(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "/home/haxxion/GameServer/html/media/pedro.mp4")
-}
-
 func main() {
 	// load tls certificates
 	serverTLSCert, err := tls.LoadX509KeyPair(CertFilePath, KeyFilePath)
@@ -54,7 +50,7 @@ func main() {
 	
 	fs := http.FileServer(http.Dir("/home/haxxion/GameServer/"))
 	http.Handle("/benn/", addHeaders(fs))
-	http.Handle("/media/yourvideo.mp4", addVideoHeaders(fs)) 
+	http.Handle("/media/pedro.mp4", addVideoHeaders(fs)) 
 
 	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
