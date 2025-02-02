@@ -35,6 +35,7 @@
         let vid;
         let shape;
         let amp;
+        let song;
 
         function preload() {
             img = new Image();
@@ -70,6 +71,8 @@
             vid.position(0, 0);
             vid.loop();
             vid.hide();
+
+            song = loadSound("pedro.mp4", loaded);
             amp = new p5.Amplitude();
         }
 
@@ -129,7 +132,6 @@
                 stroke(p.color);
                 strokeWeight(map(p.lifespan, 0, maxLife, 0.75, p.size));
                 point(p.x, p.y);
-                //rect(p.x, p.y, p.length, 8);
                 if (p.lifespan <= 0) {
                     particles.splice(i, 1);
                 }
