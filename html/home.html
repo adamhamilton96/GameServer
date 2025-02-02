@@ -141,7 +141,7 @@
             let vol = amp.getLevel();
             console.log(vol);
             for (let i = 0; i < bars.length; i++) {
-                bars[i].length = amp.getLevel() * 180;
+                bars[i].length = amp.getLevel() * random(0.1, 1.3) * 180;
             }
 
         }
