@@ -33,6 +33,7 @@
         let maxLife;
         let vid;
         let shape;
+        let amp;
 
         function preload() {
             img = new Image();
@@ -68,20 +69,17 @@
             vid.position(0, 0);
             vid.loop();
             vid.hide();
+            amp = new p5.Amplitude();
         }
 
         function draw() {
             counter++;
             background(0);
             let vidImg = vid.get();
-            //drawingContext.drawImage(img, width / 2 - 100, height / 2 - 100, 200, 200);
             push();
             scale(0.72);
             image(vidImg, width / 2 - 87, height / 2 - 123);
             pop();
-            // shape.ellipse(320, 180, 200, 200);
-            // vidImg.mask(shape);
-            // image(vidImg, 320, 180, 200, 200);
 
             for (let i = 0; i < bars.length; i++) {
                 let bar = bars[i];
@@ -136,6 +134,8 @@
                 }
 
             }
+            let vol = amp.getLevel();
+            console.log(vol);
             for (let i = 0; i < bars.length; i++) {
                 //bars[i].length = audio[int(random(0, 128))] * 180;
                 bars[i].length = random(0, 1.3) * 50;
