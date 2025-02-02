@@ -72,10 +72,11 @@
             vid.position(0, 0);
             vid.loop();
             vid.hide();
-            
+
             // song.loop();
             // song.play();
             amp = new p5.Amplitude();
+            amp.setInput(vid);
         }
 
         function draw() {
