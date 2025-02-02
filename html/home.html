@@ -45,7 +45,7 @@
         }
 
         function setup() {
-            let canvas = createCanvas(1200, 300);
+            let canvas = createCanvas(windowWidth, 300);
             canvas.elt.id = "myCanvas";
             canvas.parent('p5canvas');
             frameRate(24);
@@ -145,6 +145,10 @@
                 bars[i].length = amp.getLevel() * random(0.1, 2.5) * 360;
             }
 
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, 300);
         }
     </script>
     <div id="p5canvas"></div>
