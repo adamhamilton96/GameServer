@@ -96,7 +96,7 @@
                 //Draw bar
                 stroke((i * 10 + counter) % 360, 255, 255);
                 strokeWeight(8);
-                if (bar.length > 01) {
+                if (bar.length > 1) {
                     line(bar.x, bar.y, endX, endY);
                 }
 
@@ -142,7 +142,7 @@
             }
             let vol = amp.getLevel();
             for (let i = 0; i < bars.length; i++) {
-                bars[i].length = amp.getLevel() * random(0.1, 1.3) * 180;
+                bars[i].length = amp.getLevel() * random(1, 2.5) * 360;
             }
 
         }
