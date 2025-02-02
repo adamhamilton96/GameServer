@@ -50,8 +50,8 @@
             canvas.parent('p5canvas');
             frameRate(24);
             colorMode(HSB);
-            barCount = 64;
-            maxLife = 250; //400 speed 7
+            barCount = 63;
+            maxLife = 350; //400 speed 7
             counter = 0;
             translate(width / 2, height / 2)
             for (let i = 0; i < barCount; i++) {
@@ -74,8 +74,6 @@
             vid.loop();
             vid.hide();
 
-            // song.loop();
-            // song.play();
             amp = new p5.Amplitude();
             amp.setInput(vid);
         }
@@ -83,7 +81,7 @@
         function draw() {
             counter++;
             translate(width / 2, height / 2)
-            background(255);
+            background(0);
             let vidImg = vid.get();
             push();
             scale(0.72);
