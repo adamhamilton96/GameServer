@@ -67,8 +67,9 @@
             }
             shape = createGraphics(width, height);
             vid.size(640, 360);
-            vid.volume(0.2);
+            vid.volume(0);
             vid.play();
+            song.play()
             vid.position(0, 0);
             vid.loop();
             vid.hide();
@@ -140,8 +141,7 @@
             let vol = amp.getLevel();
             console.log(vol);
             for (let i = 0; i < bars.length; i++) {
-                //bars[i].length = audio[int(random(0, 128))] * 180;
-                bars[i].length = random(0, 1.3) * 50;
+                bars[i].length = amp.getLevel() * 180;
             }
 
         }
