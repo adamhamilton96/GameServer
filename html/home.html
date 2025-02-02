@@ -67,14 +67,14 @@
             }
             shape = createGraphics(width, height);
             vid.size(640, 360);
-            vid.volume(0);
+            vid.volume(0.2);
             vid.play();
-            song.loop(true);
-            song.play();
             vid.position(0, 0);
             vid.loop();
             vid.hide();
-
+            
+            // song.loop();
+            // song.play();
             amp = new p5.Amplitude();
         }
 
