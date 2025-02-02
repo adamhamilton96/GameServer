@@ -151,6 +151,20 @@
 
         function windowResized() {
             resizeCanvas(windowWidth, 300);
+            bars = [];
+            translate(width / 2, height / 2)
+            for (let i = 0; i < barCount; i++) {
+                let angle = map(i, 0, barCount - 1, 0, TWO_PI);
+                let x = cos(angle) * 100;
+                let y = sin(angle) * 100;
+
+                bars.push({
+                    x: x,
+                    y: y,
+                    angle: angle,
+                    length: random(0, 25),
+                });
+            }
         }
     </script>
     <div id="p5canvas"></div>
