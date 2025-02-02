@@ -96,12 +96,12 @@
                 //Draw bar
                 stroke((i * 10 + counter) % 360, 255, 255);
                 strokeWeight(8);
-                if (bar.length > 1) {
+                if (bar.length > 01) {
                     line(bar.x, bar.y, endX, endY);
                 }
 
                 // Emit particle
-                if (bar.length >= 60) { //82 70
+                if (bar.length >= 45) { //82 70
                     particles.push({
                         x: endX,
                         y: endY,
