@@ -41,6 +41,7 @@
             img = new Image();
             img.src = "media/anivia.png";
             vid = createVideo("pedro.mp4");
+            song = loadSound("pedro.mp4");
         }
 
         function setup() {
@@ -72,7 +73,6 @@
             vid.loop();
             vid.hide();
 
-            song = loadSound("pedro.mp4");
             amp = new p5.Amplitude();
         }
 
