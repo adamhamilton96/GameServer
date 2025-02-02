@@ -60,20 +60,23 @@
                     length: random(0, 25),
                 });
             }
-            vid.size(200, 200);
-            vid.volume(0);
+            vid.size(640, 360);
+            vid.volume(0.2);
             vid.play();
             vid.position(0, 0);
-            // vid.loop();
-            // vid.hide();
+            vid.loop();
+            vid.hide();
         }
 
         function draw() {
             counter++;
             background(0);
             let vidImg = vid.get();
-            drawingContext.drawImage(vidImg, width / 2 - 100, height / 2 - 100, 200, 200);
-            //image(vidImg, width / 2 - 100, height / 2 - 100);
+            //drawingContext.drawImage(img, width / 2 - 100, height / 2 - 100, 200, 200);
+            image(vidImg, width / 2 - 320, height / 2 - 180);
+            shape.ellipse(100, 100, 100, 100);
+            img.mask(shape);
+            image(img, 0, 0, width, height);
 
             for (let i = 0; i < bars.length; i++) {
                 let bar = bars[i];
