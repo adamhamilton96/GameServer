@@ -75,63 +75,63 @@
             let vidImg = vid.get();
             image(vidImg, width / 2 - 100, height / 2 - 100);
 
-            // for (let i = 0; i < bars.length; i++) {
-            //     let bar = bars[i];
-            //     let endX = bar.x + cos(bar.angle) * bar.length;
-            //     let endY = bar.y + sin(bar.angle) * bar.length;
+            for (let i = 0; i < bars.length; i++) {
+                let bar = bars[i];
+                let endX = bar.x + cos(bar.angle) * bar.length;
+                let endY = bar.y + sin(bar.angle) * bar.length;
 
-            //     //Draw bar
-            //     stroke((i * 10 + counter) % 360, 255, 255);
-            //     strokeWeight(8);
-            //     if (bar.length > 1) {
-            //         line(bar.x, bar.y, endX, endY);
-            //     }
+                //Draw bar
+                stroke((i * 10 + counter) % 360, 255, 255);
+                strokeWeight(8);
+                if (bar.length > 1) {
+                    line(bar.x, bar.y, endX, endY);
+                }
 
-            //     // Emit particle
-            //     if (bar.length >= 60) { //82 70
-            //         particles.push({
-            //             x: endX,
-            //             y: endY,
-            //             vx: 1,
-            //             vy: 1,
-            //             barIndex: i,
-            //             color: color((i * 10 + counter) % 360, 255, 255),
-            //             //color: color(0, 0, 100),
-            //             lifespan: maxLife,
-            //             velocity: bar.length / 30, //40
-            //             // lifespan: maxLife * (bar.length / 50),
-            //             offset: random(-0.3, 0.3),
-            //             size: 7, //4
-            //             //size: int(8 + audio[int(random(0, 128))] * 4)
-            //         });
-            //     }
-            // }
+                // Emit particle
+                if (bar.length >= 60) { //82 70
+                    particles.push({
+                        x: endX,
+                        y: endY,
+                        vx: 1,
+                        vy: 1,
+                        barIndex: i,
+                        color: color((i * 10 + counter) % 360, 255, 255),
+                        //color: color(0, 0, 100),
+                        lifespan: maxLife,
+                        velocity: bar.length / 30, //40
+                        // lifespan: maxLife * (bar.length / 50),
+                        offset: random(-0.3, 0.3),
+                        size: 7, //4
+                        //size: int(8 + audio[int(random(0, 128))] * 4)
+                    });
+                }
+            }
 
-            // // Draw particles
-            // for (let i = particles.length - 1; i >= 0; i--) {
-            //     let p = particles[i];
-            //     let bar = bars[p.barIndex];
-            //     let speed = map(p.lifespan, 0, maxLife, 0.25, p.velocity) * 1.25;
-            //     p.vx = (cos(bar.angle) + p.offset) * speed;
-            //     p.vy = (sin(bar.angle) + p.offset) * speed;
-            //     p.x += p.vx;
-            //     p.y += p.vy;
+            // Draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                let bar = bars[p.barIndex];
+                let speed = map(p.lifespan, 0, maxLife, 0.25, p.velocity) * 1.25;
+                p.vx = (cos(bar.angle) + p.offset) * speed;
+                p.vy = (sin(bar.angle) + p.offset) * speed;
+                p.x += p.vx;
+                p.y += p.vy;
 
-            //     p.lifespan--;
-            //     // p.color.setAlpha(map(p.lifespan, 0, maxLife, 0, 1));
-            //     stroke(p.color);
-            //     strokeWeight(map(p.lifespan, 0, maxLife, 0.75, p.size));
-            //     point(p.x, p.y);
-            //     //rect(p.x, p.y, p.length, 8);
-            //     if (p.lifespan <= 0) {
-            //         particles.splice(i, 1);
-            //     }
+                p.lifespan--;
+                // p.color.setAlpha(map(p.lifespan, 0, maxLife, 0, 1));
+                stroke(p.color);
+                strokeWeight(map(p.lifespan, 0, maxLife, 0.75, p.size));
+                point(p.x, p.y);
+                //rect(p.x, p.y, p.length, 8);
+                if (p.lifespan <= 0) {
+                    particles.splice(i, 1);
+                }
 
-            // }
-            // for (let i = 0; i < bars.length; i++) {
-            //     //bars[i].length = audio[int(random(0, 128))] * 180;
-            //     bars[i].length = random(0, 1.3) * 50;
-            // }
+            }
+            for (let i = 0; i < bars.length; i++) {
+                //bars[i].length = audio[int(random(0, 128))] * 180;
+                bars[i].length = random(0, 1.3) * 50;
+            }
 
         }
     </script>
