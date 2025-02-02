@@ -62,7 +62,7 @@
                 });
             }
             shape = createGraphics(width, height);
-            vid.size(576, 324);
+            vid.size(640, 360);
             vid.volume(0.2);
             vid.play();
             vid.position(0, 0);
@@ -75,7 +75,10 @@
             background(0);
             let vidImg = vid.get();
             //drawingContext.drawImage(img, width / 2 - 100, height / 2 - 100, 200, 200);
+            push();
+            scale(0.9);
             image(vidImg, width / 2 - 320, height / 2 - 180);
+            pop();
             // shape.ellipse(320, 180, 200, 200);
             // vidImg.mask(shape);
             // image(vidImg, 320, 180, 200, 200);
