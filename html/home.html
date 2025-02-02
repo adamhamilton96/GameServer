@@ -36,6 +36,7 @@
         function preload() {
             img = new Image();
             img.src = "media/anivia.png";
+            vid = createVideo("media/pedro.mp4");
         }
 
         function setup() {
@@ -59,9 +60,10 @@
                     length: random(0, 25),
                 });
             }
-            vid = createVideo("media/pedro.mp4");
             vid.size(200, 200);
             vid.volume(0);
+            vid.play();
+            vid.position(0, 0);
             // vid.loop();
             // vid.hide();
         }
