@@ -50,6 +50,7 @@ func main() {
 	
 	fs := http.FileServer(http.Dir("/home/haxxion/GameServer/"))
 	http.Handle("/benn/", addHeaders(fs))
+	http.Handle("/pedro.mp4", addVideoHeaders(fs))
 
 	// Cellular Automata
 	http.HandleFunc("/gameoflife/", gameOfLifeHandler)
@@ -82,6 +83,20 @@ func addHeaders(fs http.Handler) http.HandlerFunc {
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
 		w.Header().Set("Cross-Origin-Resource-Policy", "cross-origin")
+		fs.ServeHTTP(w, r)
+	}
+}
+
+func addVideoHeaders(fs http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")          // Adjust methods as needed
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization") // Adjust headers as needed
+		w.Header().Set("X-Frame-Options", "DENY")
+		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
+		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
+		w.Header().Set("Cross-Origin-Resource-Policy", "cross-origin")
+		w.Header().Set("Content-Type", "video/mp4")
 		fs.ServeHTTP(w, r)
 	}
 }
