@@ -85,7 +85,7 @@
             let vidImg = vid.get();
             push();
             scale(0.72);
-            image(vidImg, width / 2, height / 2);
+            image(vidImg, width / 2 - vidImg.width / 2, height / 2 - vidImg.height / 2);
             pop();
 
             for (let i = 0; i < bars.length; i++) {
