@@ -71,9 +71,9 @@
         function draw() {
             counter++;
             background(0);
-            //drawingContext.drawImage(img, width / 2 - 100, height / 2 - 100, 200, 200);
             let vidImg = vid.get();
-            image(vidImg, width / 2 - 100, height / 2 - 100);
+            drawingContext.drawImage(vidImg, width / 2 - 100, height / 2 - 100, 200, 200);
+            //image(vidImg, width / 2 - 100, height / 2 - 100);
 
             for (let i = 0; i < bars.length; i++) {
                 let bar = bars[i];
