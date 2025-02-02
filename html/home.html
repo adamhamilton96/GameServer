@@ -53,10 +53,11 @@
             barCount = 64;
             maxLife = 250; //400 speed 7
             counter = 0;
+            translate(width / 2, height / 2)
             for (let i = 0; i < barCount; i++) {
                 let angle = map(i, 0, barCount - 1, 0, TWO_PI);
-                let x = width / 2 + cos(angle) * 100;
-                let y = height / 2 + sin(angle) * 100;
+                let x = cos(angle) * 100;
+                let y = sin(angle) * 100;
 
                 bars.push({
                     x: x,
