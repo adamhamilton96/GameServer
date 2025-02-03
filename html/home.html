@@ -20,6 +20,8 @@
             flex-direction: column;
             min-height: 60vh;
             margin: 0;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .container {
@@ -33,15 +35,21 @@
         let counter;
         let maxLife;
         let vid;
-        let shape;
         let amp;
+        let isMuted = true;
+        let slider;
 
         function preload() {
-            img = new Image();
-            img.src = "media/anivia.png";
             vid = createVideo("../pedro.mp4");
-        }
+            vid.volume(0);
+            vid.size(640, 360);
+            vid.position(0, 0);
+            vid.loop();
+            vid.hide();
 
+            amp = new p5.Amplitude();
+            amp.setInput(vid);
+        }
         function setup() {
             let canvas = createCanvas(windowWidth, 300);
             canvas.elt.id = "myCanvas";
@@ -64,16 +72,18 @@
                     length: random(0, 25),
                 });
             }
-            shape = createGraphics(width, height);
-            vid.size(640, 360);
-            vid.volume(0.2);
-            vid.play();
-            vid.position(0, 0);
-            vid.loop();
-            vid.hide();
 
-            amp = new p5.Amplitude();
-            amp.setInput(vid);
+            translate(0, 0);
+            button = createButton("Unmute");
+            button.mouseClicked(muteButton);
+            button.size(100, 20);
+            button.position(width - 100, 20);
+
+            slider = createSlider(0, 1, 0.2, 0.1);
+            slider.position(width - 100, 10);
+            slider.style('transform', 'rotate(270deg)');
+            slider.style('height', '300px');
+            slider.input(sliderUpdated);
         }
 
         function draw() {
@@ -161,7 +171,33 @@
                     length: random(0, 25),
                 });
             }
+            button.position(width - 100, 20);
+            slider.position(width - 100, 10);
         }
+
+        function muteButton() {
+            getAudioContext().resume();
+            if (isMuted === true) {
+                isMuted = false;
+                vid.volume(slider.value());
+                buttonLabel = "Mute";
+                button.html(buttonLabel);
+            } else {
+                isMuted = true;
+                vid.volume(0);
+                buttonLabel = "Unmute";
+                button.html(buttonLabel);
+            }
+        }
+
+        function sliderUpdated() {
+            getAudioContext().resume();
+            if (!isMuted) {
+                vid.volume(slider.value());
+            }
+        }
+
+
     </script>
     <div id="p5canvas"></div>
     <div>

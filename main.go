@@ -34,12 +34,12 @@ func main() {
 
 	// Home
 	http.HandleFunc("/", rootHandler)
-	
+
 	// Multiplayer
 	// Connect4
 	http.HandleFunc("/connect4/", connect4Handler)
 	http.HandleFunc("/connect4echo", connect4EchoHandler)
-	
+
 	// Singleplayer
 	// FloatySquare
 	http.HandleFunc("/floatysquare/", floatySquareHandler)
@@ -47,7 +47,7 @@ func main() {
 	// Snake
 	http.HandleFunc("/snake/", snakeHandler)
 	http.HandleFunc("/snakeecho", snakeEchoHandler)
-	
+
 	fs := http.FileServer(http.Dir("/home/haxxion/GameServer/"))
 	http.Handle("/benn/", addHeaders(fs))
 	http.Handle("/pedro.mp4", addVideoHeaders(fs))
