@@ -27,6 +27,41 @@
         .container {
             text-align: center;
         }
+
+        .game-grid-CA {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .game-grid-SP {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .game-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .game-image {
+            width: 150px;
+            height: 100px;
+            object-fit: fill;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+        }
+
+        .game-cat {
+            text-align: center;
+            font-weight: bold;
+        }
     </style>
     <script>
         let bars = [];
@@ -40,7 +75,7 @@
         let slider;
 
         function preload() {
-            vid = createVideo("../pedro.mp4");
+            vid = createVideo("../media/pedro.mp4");
             vid.volume(0);
             vid.size(640, 360);
             vid.position(0, 0);
@@ -202,27 +237,56 @@
     <div id="p5canvas"></div>
     <div>
         <h1 style="text-align: center;">Haxxion</h1>
-        <p>Multiplayer</p>
-        <ul>
-            <li><a href="/connect4/">Connect 4</a></li>
-        </ul>
-        <p>Single Player</p>
-        <ul>
-            <li><a href="/floatysquare/">FloatySquare</a></li>
-            <li><a href="/snake/">Snake</a></li>
-            <li><a href="/benn/">Benn</a></li>
-        </ul>
-        <p>Cellular Automata</p>
-        <ul>
-            <li><a href="/gameoflife/">Game of Life</a></li>
-            <li><a href="/langtonsant/">Langtons Ant</a></li>
-            <li><a href="/briansbrain/">Brians Brain</a></li>
-            <li><a href="/wireworld/">Wire World</a></li>
-            <li><a href="/sandpiles/">Sandpiles</a></li>
-        </ul>
-        <p>Camera Effects</p>
-        <ul>
-            <li><a href="/stippling/">Camera Stippling</a></li>
-        </ul>
+        <p class="game-cat">Multiplayer</p>
+        <a href="/connect4/" class="game-link">
+            <img src="/media/connect4.png" alt="Connect 4" class="game-image">
+            <span>Connect 4</span>
+        </a>
+
+        <p class="game-cat">Single Player</p>
+        <div class="game-grid-SP">
+            <a href="/floatysquare/" class="game-link">
+                <img src="/media/floatySquare.png" alt="FloatySquare" class="game-image">
+                <span>FloatySquare</span>
+            </a>
+            <a href="/snake/" class="game-link">
+                <img src="/media/snake.png" alt="Snake" class="game-image">
+                <span>Snake</span>
+            </a>
+            <a href="/benn/" class="game-link">
+                <img src="/media/benn.png" alt="Benn" class="game-image">
+                <span>Benn</span>
+            </a>
+        </div>
+
+        <p class="game-cat">Cellular Automata</p>
+        <div class="game-grid-CA">
+            <a href="/gameoflife/" class="game-link">
+                <img src="/media/gameOfLife.png" alt="Game of Life" class="game-image">
+                <span>Game of Life</span>
+            </a>
+            <a href="/langtonsant/" class="game-link">
+                <img src="/media/langtonsAnt.png" alt="Langtons Ant" class="game-image">
+                <span>Langtons Ant</span>
+            </a>
+            <a href="/briansbrain/" class="game-link">
+                <img src="/media/briansBrain.png" alt="Brians Brain" class="game-image">
+                <span>Brians Brain</span>
+            </a>
+            <a href="/wireworld/" class="game-link">
+                <img src="/media/wireWorld.png" alt="Wire World" class="game-image">
+                <span>Wire World</span>
+            </a>
+            <a href="/sandpiles/" class="game-link">
+                <img src="/media/sandPiles.png" alt="Sandpiles" class="game-image">
+                <span>Sandpiles</span>
+            </a>
+        </div>
+
+        <p class="game-cat">Camera Effects</p>
+        <a href="/stippling/" class="game-link">
+            <img src="/media/stippling.png" alt="Camera Stippling" class="game-image">
+            <span>Camera Stippling</span>
+        </a>
     </div>
 </body>
